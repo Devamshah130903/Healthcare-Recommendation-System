@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - HealthCareAI{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mb-4">
+        <h2>Welcome, {{ current_user.name }}</h2>
+        <p class="text-muted">Your personal Healthcare Dashboard</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 mb-3">
+        <div class="card shadow p-4">
+            <h4 class="mb-3">Disease Prediction System</h4>
+            <p class="text-muted mb-4">Enter your symptoms separated by commas for AI-powered disease prediction</p>
+
+            <form method="POST" action="{{ url_for('dashboard') }}">
+                <div class="mb-3">
+                    <label class="form-label"><strong>Enter Symptoms:</strong></label>
+                    <textarea name="symptoms" class="form-control" rows="3" placeholder="Example: fever, headache, cough, fatigue" required>{{ request.form.symptoms or '' }}</textarea>
+                    <small class="form-text text-muted">Use underscores for multi-word symptoms (e.g., chest_pain, sore_throat)</small>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">Analyze Symptoms</button>
+            </form>
+
+            {% if prediction_data %}
+            <div class="mt-4 p-4 border rounded" style="background: linear-gradient(135deg,#667eea15,#764ba215);">
+                <h5 class="mb-3" style="color: #667eea;">Prediction Results</h5>
+                
+                <div class="alert alert-info mb-3" role="alert">
+                    <div class="d-flex align-items-center">
+                        <div style="font-size: 2rem; margin-right: 15px;">🏥</div>
+                        <div>
+                            <strong style="font-size: 1.1rem;">Predicted Condition:</strong>
+                            <h4 class="mb-0 mt-1" style="color: #0c5460;">{{ prediction_data.disease }}</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">Symptoms Matched</h6>
+                                <h3 class="mb-0">{{ prediction_data.matched_symptoms|length }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">Symptoms Not Recognized</h6>
+                                <h3 class="mb-0">{{ prediction_data.unmatched_symptoms|length }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if prediction_data.matched_symptoms %}
+                <div class="mb-3">
+                    <h6 class="mb-3"><strong>Recognized Symptoms & Details:</strong></h6>
+                    <div class="accordion" id="symptomAccordion">
+                        {% for symptom, info in prediction_data.symptom_info.items() %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ loop.index }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}">
+                                    <strong>{{ symptom }}</strong>
+                                </button>
+                            </h2>
+                            <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#symptomAccordion">
+                                <div class="accordion-body">
+                                    <p><strong>Description:</strong><br>{{ info.description }}</p>
+                                    <p><strong>Medication:</strong><br>{{ info.medication }}</p>
+                                    <p><strong>Diet:</strong><br>{{ info.diet }}</p>
+                                    <p><strong>Precautions:</strong><br>{{ info.precautions }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if prediction_data.unmatched_symptoms %}
+                <div class="mb-3">
+                    <h6 class="mb-2"><strong>Unrecognized Symptoms:</strong></h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for symptom in prediction_data.unmatched_symptoms %}
+                        <span class="badge bg-warning text-dark" style="font-size: 0.9rem; padding: 8px 12px;">
+                            {{ symptom }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    <small class="text-muted d-block mt-2">
+                        These symptoms weren't found in our database. Please check spelling or use underscores.
+                    </small>
+                </div>
+                {% endif %}
+
+                {% if fuzzy_suggestions %}
+                <div class="mb-3">
+                    <h6 class="mb-2"><strong>Did you mean?</strong></h6>
+                    {% for unmatched, suggestions in fuzzy_suggestions.items() %}
+                        {% if suggestions %}
+                        <p class="mb-2">
+                            <strong>{{ unmatched }}:</strong>
+                            {% for suggestion in suggestions %}
+                                <span class="badge bg-secondary">{{ suggestion }}</span>
+                            {% endfor %}
+                        </p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="alert alert-warning mt-3 mb-0" role="alert">
+                    <h6 class="alert-heading">Important Medical Disclaimer</h6>
+                    <hr>
+                    <p class="mb-2"><strong>This is an AI prediction tool for educational purposes only.</strong></p>
+                    <ul class="mb-0" style="font-size: 0.9rem;">
+                        <li>Always consult a qualified healthcare provider for accurate diagnosis</li>
+                        <li>Do not self-medicate based on these predictions</li>
+                        <li>If experiencing severe symptoms, seek immediate medical attention</li>
+                    </ul>
+                </div>
+
+                <div class="d-grid gap-2 mt-3">
+                    <a href="{{ url_for('maps') }}" class="btn btn-outline-primary">Find Nearby Hospitals</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card shadow p-4 mb-3">
+            <h5 class="mb-3">Quick Actions</h5>
+            <div class="d-grid gap-2">
+                <a href="{{ url_for('maps') }}" class="btn btn-success">Nearby Hospitals</a>
+                <a href="{{ url_for('api_symptoms') }}" class="btn btn-info" target="_blank">View All Symptoms</a>
+            </div>
+        </div>
+
+        <div class="card shadow p-4">
+            <h5 class="mb-3">Tips for Better Predictions</h5>
+            <ul class="list-unstyled" style="font-size: 0.9rem;">
+                <li class="mb-2">Enter specific symptoms clearly</li>
+                <li class="mb-2">Use commas to separate symptoms</li>
+                <li class="mb-2">Use underscores for multi-word symptoms</li>
+                <li class="mb-2">Include as many relevant symptoms as possible</li>
+            </ul>
+            <hr>
+            <h6 class="mb-2">Example Symptoms:</h6>
+            <small class="text-muted d-block">Common:</small>
+            <code style="font-size: 0.8rem; display: block; white-space: normal; margin-bottom: 10px;">
+                fever, headache, cough, fatigue
+            </code>
+            <small class="text-muted d-block">Multi-word:</small>
+            <code style="font-size: 0.8rem; display: block; white-space: normal;">
+                chest_pain, sore_throat, shortness_of_breath
+            </code>
+        </div>
+    </div>
+</div>
+
+<style>
+    .gap-2 { gap: 0.5rem !important; }
+    .badge { margin: 0.2rem; }
+    .card { transition: transform 0.2s; }
+    .card:hover { transform: translateY(-2px); }
+</style>
+{% endblock %}

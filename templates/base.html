@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        Healthcare Recommendation System
+      {% endblock %}
+    </title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        padding-top: 70px; /* offset for navbar */
+        min-height: 100vh;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        background: url('https://th.bing.com/th/id/R.421c922ca4033ed1e7fc9d54e108d0c0?rik=qN20psV917YNhQ&riu=http%3a%2f%2fcleveland-bookkeeping.com%2fwp-content%2fuploads%2f2016%2f03%2fshutterstock_155141132.jpg&ehk=S48LKXMLbb1zr7uxMbdrL742hqjqmhpyRvNl4TkBB8g%3d&risl=1&pid=ImgRaw&r=0')
+          no-repeat center center fixed;
+        background-size: cover;
+        filter: blur(5px) brightness(0.6);
+        opacity: 0.9;
+      }
+
+      .navbar-brand {
+        font-weight: bold;
+        color: #007bff !important;
+      }
+
+      #navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 70px; /* same height as padding-top */
+        transition: top 0.3s;
+        z-index: 1030;
+      }
+
+      .container {
+        flex: 1; /* Push footer down if content is short */
+      }
+
+      .footer {
+        padding: 20px;
+        text-align: center;
+        background-color: #e9ecef;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('dashboard') }}">HealthCareAI</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            {% if session.get('user') %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('maps') }}">Nearby Hospitals</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-danger" href="{{ url_for('logout') }}">Logout</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="row">
+            <div class="col-12">
+              {% for category, message in messages %}
+                <div
+                  class="alert alert-{{ category }} alert-dismissible fade show"
+                  role="alert"
+                >
+                  {{ message|safe }}
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>© 2025 HealthCareAI | Smart Healthcare Recommendation System</p>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Navbar Scroll Hide/Show Script -->
+    <script>
+      let prevScrollPos = window.pageYOffset;
+      const navbar = document.getElementById("navbar");
+
+      window.onscroll = function () {
+        let currentScrollPos = window.pageYOffset;
+        if (prevScrollPos > currentScrollPos) {
+          navbar.style.top = "0"; // show navbar when scrolling up
+        } else {
+          navbar.style.top = "-80px"; // hide navbar when scrolling down
+        }
+        prevScrollPos = currentScrollPos;
+      };
+    </script>
+  </body>
+</html>

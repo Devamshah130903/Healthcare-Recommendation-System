@@ -1,0 +1,21 @@
+symptom,description,medication,diet,precautions
+anxiety_and_nervousness,Feelings of worry, nervousness, or unease typically about an imminent event or something with an uncertain outcome,SSRIs (sertraline), benzodiazepines (short-term), beta-blockers,Balanced diet with complex carbs, omega-3s, limit caffeine and sugar,Regular exercise, stress management, adequate sleep, therapy
+depression,Persistent feelings of sadness, hopelessness, and loss of interest in daily activities,Antidepressants (SSRIs, SNRIs), therapy,Omega-3 fatty acids, B vitamins, protein-rich foods,Therapy, regular routine, social spport, exercise
+shortness_of_breath,Difficulty breathing or feeling breathless,Bronchodilators, steroids, oxygen therapy if needed,Light meals, avoid gas-producing foods,Avoid triggers, stay hydrated, seek emergency care if severe
+depressive_or_psychotic_symptoms,Combination of depressive symptoms with possible hallucinations or delusions,Antipsychotics, antidepressants, mood stabilizers,Balanced nutrition, avoid alcohol and drugs,Regular psychiatric care, medication adherence, support system
+sharp_chest_pain,Sudden, intense pain in chest area,Nitroglycerin, aspirin, antacids (if GERD),Low-fat, low-cholesterol diet, small frequent meals,Seek immediate medical attention, avoid exertion
+dizziness,Feeling lightheaded, unsteady, or like you might faint,Antihistamines, antiemetics,Stay hydrated, small frequent meals, avoid sudden movements,Avoid driving, rise slowly, stay hydrated
+insomnia,Difficulty falling or staying asleep,Sleep aids (melatonin, prescription sleep medications),Avoid caffeine, heavy meals before bed, light snack if hungry,Sleep hygiene, regular schedule, limit screen time before bed
+abnormal_involuntary_movements,Uncontrollable movements of body parts,Antipsychotics, benzodiazepines, botulinum toxin,Balanced diet, magnesium-rich foods,Avoid stress triggers, safety measures at home
+chest_tightness,Feeling of pressure or constriction in chest,Bronchodilators, anti-anxiety meds, antacids,Light meals, avoid trigger foods,Monitor for cardiac symptoms, stress reduction
+palpitations,Feeling of rapid, fluttering, or pounding heartbeat,Beta-blockers, calcium channel blockers,Low caffeine, avoid alcohol, balanced electrolytes,Avoid triggers, stress management, regular monitoring
+irregular_heartbeat,Abnormal heart rhythm (arrhythmia),Antiarrhythmics, blood thinners,Low sodium, heart-healthy fats,Monitor heart rate, avoid stimulants, regular check-ups
+breathing_fast,Rapid breathing (tachypnea),Bronchodilators, anti-anxiety medications,Light meals, avoid heavy foods that pressure diaphragm,Practice breathing exercises, identify triggers
+hoarse_voice,Rough, husky, or strained voice quality,Voice rest, hydration, avoid irritants,Warm liquids, avoid spicy foods,Voice rest, avoid smoking, humidify air
+sore_throat,Pain, scratchiness, or irritation of throat,Pain relievers, throat lozenges, anti-inflammatories,Warm liquids, soft foods, avoid acidic foods,Rest voice, stay hydrated, avoid irritants
+difficulty_speaking,Trouble forming words or speaking clearly,Depends on cause - may include speech therapy,Easy-to-swallow foods, thickened liquids if needed,Speech therapy, communication aids, patience
+cough,Sudden expulsion of air from lungs to clear airways,Cough suppressants, expectorants, antihistamines,Warm liquids, honey, avoid dairy if it thickens mucus,Hydration, humidification, avoid irritants
+nasal_congestion,Blocked or stuffy nose,Decongestants, antihistamines, nasal steroids,Warm fluids, spicy foods (may help), steam,Saline nasal spray, humidifier, proper hydration
+throat_swelling,Enlargement or inflammation in throat area,Epinephrine (if allergic), steroids, antihistamines,Soft foods, cool liquids, avoid allergens,Seek emergency care if breathing difficulty
+diminished_hearing,Reduced ability to hear sounds,Hearing aids, treatment for underlying cause,Anti-inflammatory diet, omega-3s,Protect ears from loud noise, avoid cotton swabs
+lump_in_throat,Feeling of a mass or obstruction in throat (globus sensation),Antacids if GERD, anti-anxiety if stress-related,Small frequent meals, avoid trigger foods,Stress management, proper chewing, stay hydrated

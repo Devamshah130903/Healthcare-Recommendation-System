@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Nearby Hospitals - HealthCareAI{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow p-4">
+            <h4 class="mb-3">Nearby Hospitals & Clinics</h4>
+            <div id="map" style="height: 500px; border-radius: 10px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Leaflet CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+    // Initialize map (fallback location = India)
+    var map = L.map('map').setView([20.5937, 78.9629], 5);
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Ask for user's location
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+
+            // Move map to user location
+            map.setView([lat, lon], 14);
+
+            // Add user marker
+            L.marker([lat, lon]).addTo(map)
+                .bindPopup("📍 You are here")
+                .openPopup();
+
+            // Fetch nearby hospitals (within 3km) using Overpass API
+            var overpassUrl = `https://overpass-api.de/api/interpreter?data=[out:json];node["amenity"="hospital"](around:3000,${lat},${lon});out;`;
+
+            fetch(overpassUrl)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.elements.length === 0) {
+                        alert("No hospitals found nearby.");
+                    }
+                    data.elements.forEach(function(hospital) {
+                        var hLat = hospital.lat;
+                        var hLon = hospital.lon;
+                        var name = hospital.tags.name || "Unnamed Hospital";
+
+                        L.marker([hLat, hLon]).addTo(map)
+                            .bindPopup("🏥 " + name);
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Error fetching nearby hospitals.");
+                });
+
+        }, function(error) {
+            alert("⚠️ Location access denied. Showing default map.");
+        });
+    } else {
+        alert("❌ Geolocation is not supported by your browser.");
+    }
+</script>
+{% endblock %}
