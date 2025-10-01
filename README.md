@@ -97,4 +97,4 @@ ML Model: Support Vector Classifier (SVC) trained on healthcare dataset
 
 👨‍💻 Author
 
-Developed by Devam Shah# Healthcare-Recoomention-System
+Developed by Devam Shah# Healthcare-Recommention-System
