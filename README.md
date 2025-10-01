@@ -87,8 +87,13 @@ Database: SQLite / MySQL (configurable)
 ML Model: Support Vector Classifier (SVC) trained on healthcare dataset
 
 📸 Screenshots
+<img width="1919" height="1083" alt="Screenshot 2025-09-29 203326" src="https://github.com/user-attachments/assets/b69e9cf0-e80b-4b39-b965-36d21a39f15e" />
+<img width="1919" height="1059" alt="Screenshot 2025-09-29 203343" src="https://github.com/user-attachments/assets/f6782d90-be2c-42b0-8c2c-1525f84f36da" />
+<img width="1919" height="1029" alt="Screenshot 2025-09-29 203411" src="https://github.com/user-attachments/assets/5cd455bb-e474-479f-9a97-d4c7695b09ea" />
+<img width="1919" height="1021" alt="Screenshot 2025-09-29 203425" src="https://github.com/user-attachments/assets/b028f0f7-0fb0-489c-a4be-9e0f99e29772" />
 
-(Add screenshots here after running the app)
+
+
 
 👨‍💻 Author
 
